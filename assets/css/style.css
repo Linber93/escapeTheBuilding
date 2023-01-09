@@ -25,14 +25,29 @@ body {
     max-height: 500px;
     background: rgb(185, 185, 185);
     margin: 0 auto;
+    padding: 20px;
     border-radius: 1rem;
     box-shadow: 0 8px 18px 0 rgb(0 0 0 / 30%), 0 5px 15px 0 rgb(0 0 0 / 35%);
 }
 
 .game-building {
-    display: flex;
-    flex-wrap: wrap;
+    margin: 0 auto;
     width: 15rem;
     height: 15rem;
     border: solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wall {
+    background-color: black;
+    width: 16.67%;
+    height: 16.67%;
+}
+
+.corridor {
+    background: white;
+    width: 16.67%;
+    height: 16.67%;
+
 }
