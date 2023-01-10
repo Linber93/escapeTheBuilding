@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let button of buttons){
         button.addEventListener('click', function() {
             if (this.getAttribute("data-type") === "start-game"){
-                runGame();
+                startGametimer();
             } else if (this.getAttribute("data-type") === "leaderboard"){
                 goToLeaderboard();
             } else {
@@ -74,5 +74,39 @@ function createBoard() {
 }
 
 function runGame() {
+    let startPosition = [0, 0]
+    console.log('player position is 0,0')
+    
+
+
+
+    
     
 }
+
+function startGametimer() {
+
+    let gameTimer = document.getElementById('countdown-text');
+
+    if (!gameTimer) {
+        gameTimer = document.createElement('p');
+        gameTimer.setAttribute("id", "countdown-text");
+        timer.appendChild(gameTimer);
+    } 
+
+    let secondsLeft = 5;
+    gameTimer.textContent = `Game will start in: ${secondsLeft} seconds`;
+    let interval = setInterval(() => {
+        secondsLeft--;
+        gameTimer.textContent = `Game will start in: ${secondsLeft} seconds`;
+        if (secondsLeft === 0) {
+          clearInterval(interval);
+          gameTimer.textContent = "Game started!";
+        }
+    }, 1000);
+
+    runGame();
+}
+    
+
+
