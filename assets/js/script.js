@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
 
     //get the button elements and add event listeners. 
-    let buttons = document.getElementsByTagName('button')
+    let buttons = document.getElementsByClassName('menu')
 
     for (let button of buttons){
         button.addEventListener('click', function() {
@@ -54,35 +54,46 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         
     }
-
 });
 
-function createBoard() {
-    for (let i = 0; i < layout.length; i++) {
-    let location = document.createElement('div')
-    building.appendChild(location)
-    gameSquares.push(location)
-
-    //add layout to the board
-        if (layout[i] === 1) {
-          gameSquares[i].classList.add('wall');
-        }
-        if (layout[i] === 0) {
-          gameSquares[i].classList.add('corridor');
-        }
+function runGame() {
+    let navigationButtons = document.getElementsByClassName('nav-btn')
+    
+    for (let button of navigationButtons){
+        button.addEventListener('click', function(){
+            if (this.getAttribute('id') === 'up'){
+                playerPositionUp();
+                console.log('move player up')
+            } else if (this.getAttribute('id') === 'left') {
+                playerPositionLeft();
+                console.log('move player left')
+            } else if (this.getAttribute('id') === 'right'){
+                playerPositionRight();
+                console.log('move player right')
+            } else if (this.getAttribute('id') === 'down'){
+                playerPositionDown();
+                console.log('move player down');
+            } 
+        })
     }
 }
 
-function runGame() {
-    let startPosition = [0, 0]
-    console.log('player position is 0,0')
-    
+function playerPositionUp(layout) {
+  
+} 
 
-
-
-    
-    
+function playerPositionLeft(layout) {
+  
 }
+
+function playerPositionRight(layout) {
+  
+}
+
+function playerPositionDown(layout) {
+  
+}
+
 
 function startGametimer() {
 
@@ -100,13 +111,14 @@ function startGametimer() {
         secondsLeft--;
         gameTimer.textContent = `Game will start in: ${secondsLeft} seconds`;
         if (secondsLeft === 0) {
-          clearInterval(interval);
-          gameTimer.textContent = "Game started!";
+            clearInterval(interval);
+            gameTimer.textContent = "Game started!";
+            runGame();
+            console.log('game is running')
         }
     }, 1000);
-
-    runGame();
 }
-    
+
+
 
 
