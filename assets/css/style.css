@@ -54,3 +54,35 @@ body {
 #timer {
     padding: 20px;
 }
+
+#leaderboard-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }
+
+
+  .leaderboard-area {
+    width: 400px;
+    height: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-exit-leaderboard {
+    width: 50px;
+    height: 50px;
+    background: black;
+    margin: 15px;
+  }
