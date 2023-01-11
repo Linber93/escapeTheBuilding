@@ -66,8 +66,7 @@ function loadGame() {
 
 function runGame() {
 
-    game.newPositionX = 0;
-    game.newPositionY = 0;
+    
 
     // Event listeners for navigation buttons
     let navigationButtons = document.getElementsByClassName('nav-btn')
@@ -128,6 +127,9 @@ function playerPositionDown() {
  */
 function countDown() {
 
+    game.newPositionX = 0;
+    game.newPositionY = 0;
+
     let gameTimer = document.getElementById('countdown-text');
 
     if (!gameTimer) {
@@ -180,16 +182,6 @@ function showLeaderboard() {
     let leaderBoardOverlay = document.querySelector('#leaderboard-overlay');
     let overlayContentBlock = document.createElement('div');
     let exitLeaderboard = document.createElement('button');
-    let leaderboardList = document.createElement('ol');
-
-    for (let i = 1; i <= 3; i++) {
-    let li = document.createElement("li");
-    li.innerHTML = "List item " + i;
-    leaderboardList.appendChild(li);
-    }
-    leaderboardList.classList.add('leaderboard-list');
-
-    overlayContentBlock.appendChild(leaderboardList);
 
     leaderBoardOverlay.textContent = '';
     exitLeaderboard.classList.add('btn-exit');
@@ -209,24 +201,39 @@ function hideLeaderboard() {
 //displays an overlay with a victory message upon reaching the goal
 
 function displayVictoryScreen() {
-    document.getElementById('victory-screen-overlay').style.display = 'block';
+
+    
     let victoryScreenOverlay = document.querySelector('#victory-screen-overlay');
     let overlayContentBlock = document.createElement('div');
     let exitVictoryScreen = document.createElement('button');
-    overlayContentBlock.classList.add('overlay-content-block');
-    victoryScreenOverlay.appendChild(overlayContentBlock);
-    overlayContentBlock.appendChild(exitVictoryScreen);
+    victoryScreenOverlay.textContent = '';
     exitVictoryScreen.classList.add('btn-exit');
     exitVictoryScreen.addEventListener("click", hideVictoryScreen);
 
+    overlayContentBlock.classList.add('overlay-content-block');
+    victoryScreenOverlay.appendChild(overlayContentBlock);
+    overlayContentBlock.appendChild(exitVictoryScreen);
+
+    let victoryMessage = document.createElement('p');
+
     let time = game.stopTime / 1000 - game.startTime / 1000;
     let formattedTime = time.toFixed(2);
-    
-    let victoryMessage = document.createElement('p');
+
     victoryMessage.innerHTML = `Yay! You made it out in: ${formattedTime} seconds!`;
     overlayContentBlock.appendChild(victoryMessage);
-    leaderBoardOverlay.textContent = '';
+    document.getElementById('victory-screen-overlay').style.display = 'block';
+    
+    
 
+    
+
+    
+    
+    
+    
+    
+
+    
 }
 
 function hideVictoryScreen() {
