@@ -34,6 +34,8 @@ function loadGame() {
             gameSquares[i] = [];
             for(let j = 0; j < game.layout[i].length; j++) {
                 let location = document.createElement('div');
+                location.dataset.x = i
+                location.dataset.y = j
                 building.appendChild(location);
                 gameSquares[i][j] = location;
 
