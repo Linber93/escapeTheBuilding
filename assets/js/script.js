@@ -15,7 +15,9 @@ let game = {
     newPositionY: 0,
     leaderboard: [],
     startTime: null,
-    stopTime: null
+    stopTime: null,
+    exitX: 0,
+    exitY: 5
 }
 
 document.addEventListener("DOMContentLoaded", loadGame)
@@ -94,7 +96,7 @@ function playerMove(x, y) {
     if (game.layout[newPositionY][newPositionX] === 0 ) {
         game.newPositionX = newPositionX;
         game.newPositionY = newPositionY;
-        if (newPositionX === 0 && newPositionY === 5){
+        if (newPositionX === game.exitX && newPositionY === game.exitY){
             console.log("You made it out of the building, Well Done!")
             stopTimer();
             displayVictoryScreen();
@@ -104,6 +106,9 @@ function playerMove(x, y) {
         console.log('Invalid position');
     }
 }
+
+let playerCurrentPosition = [game.newPositionX] + ',' + [game.newPositionX];
+playerCurrentPosition.id = 'current-position'
 
 
 function playerPositionUp() {
@@ -153,6 +158,9 @@ function countDown() {
         }
     }, 1000);
 }
+
+
+
 
 /** 
  * starts game timer
