@@ -61,11 +61,13 @@ function loadGame() {
                 alert("Something went wrong!");
             }
         })
-        
     }
 };
 
 function runGame() {
+
+    game.newPositionX = 0;
+    game.newPositionY = 0;
 
     // Event listeners for navigation buttons
     let navigationButtons = document.getElementsByClassName('nav-btn')
@@ -95,6 +97,7 @@ function playerMove(x, y) {
         game.newPositionY = newPositionY;
         if (newPositionX === 0 && newPositionY === 5){
             console.log("You made it out of the building, Well Done!")
+            stopTimer();
             displayVictoryScreen();
         }
         console.log('New pos: ' + game.newPositionX + ', ' + game.newPositionY); 
@@ -102,6 +105,7 @@ function playerMove(x, y) {
         console.log('Invalid position');
     }
 }
+
 
 function playerPositionUp() {
     playerMove(0,-1);
@@ -199,7 +203,7 @@ function showLeaderboard() {
 }
 
 function hideLeaderboard() {
-    document.getElementById('victory-screen-overlay').style.display = 'none';
+    document.getElementById('leaderboard-overlay').style.display = 'none';
 }
 
 //displays an overlay with a victory message upon reaching the goal
@@ -213,24 +217,15 @@ function displayVictoryScreen() {
     victoryScreenOverlay.appendChild(overlayContentBlock);
     overlayContentBlock.appendChild(exitVictoryScreen);
     exitVictoryScreen.classList.add('btn-exit');
+    exitVictoryScreen.addEventListener("click", hideVictoryScreen);
 
-    let usernameInput = document.createElement('input');
-    usernameInput.setAttribute('type', 'text');
-    usernameInput.setAttribute('id', 'username-input');
-    overlayContentBlock.appendChild(usernameInput);
-
+    let time = game.stopTime / 1000 - game.startTime / 1000;
+    let formattedTime = time.toFixed(2);
     
-
-    let victoryMessage = document.createElement('p').innerHTML = `Yay! You made it out in: ${game.stopTime - game.startTime} seconds!`;
+    let victoryMessage = document.createElement('p');
+    victoryMessage.innerHTML = `Yay! You made it out in: ${formattedTime} seconds!`;
     overlayContentBlock.appendChild(victoryMessage);
-
-    
-    
-
-    
-    
-
-    exitVictoryScreen.addEventListener("click", hideLeaderboard);
+    leaderBoardOverlay.textContent = '';
 
 }
 
