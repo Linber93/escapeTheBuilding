@@ -7,7 +7,7 @@ let game = {
         [0, 1, 0, 0, 0, 0],
         [0, 1, 0, 1, 1, 0],
         [0, 0, 0, 0, 1, 0],
-        [0, 1, 1, 1, 1, 0],
+        [1, 1, 1, 1, 1, 0],
         [0, 0, 0, 0, 1, 0],
         [0, 1, 1, 0, 0, 0]
     ],
@@ -16,8 +16,8 @@ let game = {
     leaderboard: [],
     startTime: null,
     stopTime: null,
-    exitX: 0,
-    exitY: 5
+    exitX: 5,
+    exitY: 0
 }
 
 document.addEventListener("DOMContentLoaded", loadGame)
@@ -38,6 +38,7 @@ function loadGame() {
                 let location = document.createElement('div');
                 location.dataset.x = i
                 location.dataset.y = j
+                location.id = `c${i}-${j}`
                 building.appendChild(location);
                 gameSquares[i][j] = location;
 
@@ -49,6 +50,7 @@ function loadGame() {
                     gameSquares[i][j].classList.add('corridor');
                 }
             }
+            getPlayerCurrentposition();
         }
     //get the button elements and add event listeners. 
     let buttons = document.getElementsByClassName('menu')
@@ -68,7 +70,7 @@ function loadGame() {
 
 function runGame() {
 
-    
+    getPlayerCurrentposition()
 
     // Event listeners for navigation buttons
     let navigationButtons = document.getElementsByClassName('nav-btn')
@@ -96,6 +98,7 @@ function playerMove(x, y) {
     if (game.layout[newPositionY][newPositionX] === 0 ) {
         game.newPositionX = newPositionX;
         game.newPositionY = newPositionY;
+        updatePlayerPositionDisplay()
         if (newPositionX === game.exitX && newPositionY === game.exitY){
             console.log("You made it out of the building, Well Done!")
             stopTimer();
@@ -105,26 +108,40 @@ function playerMove(x, y) {
     } else { 
         console.log('Invalid position');
     }
+    getPlayerCurrentposition()
 }
 
-let playerCurrentPosition = [game.newPositionX] + ',' + [game.newPositionX];
-playerCurrentPosition.id = 'current-position'
+function updatePlayerPositionDisplay(){
+    // Remove the current position class from whichever cell(s) has/have it.
+    // Assuming the possibility that multiple cells might be marked as current
+    // to be safe.
+    document.querySelectorAll('.current-position').forEach((div, i) => {
+      div.classList.remove("current-position")
+    })
+}
+function getPlayerCurrentposition(){
+
+let playerCurrentPosition = document.getElementById(`c${game.newPositionX}-${game.newPositionY}`);
+
+playerCurrentPosition.classList.add('current-position')
+
+}
 
 
 function playerPositionUp() {
-    playerMove(0,-1);
+    playerMove(-1,0);
 } 
 
 function playerPositionLeft() {
-    playerMove(-1,0);  
+    playerMove(0,-1);  
 }
 
 function playerPositionRight() {
-    playerMove(1,0);
+    playerMove(0,1);
 }
 
 function playerPositionDown() {
-    playerMove(0,1);
+    playerMove(1,0);
 }
 
 /**
