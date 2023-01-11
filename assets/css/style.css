@@ -51,9 +51,7 @@ body {
     height: 16.67%;
 }
 
-#timer {
-    padding: 20px;
-}
+
 
 #leaderboard-overlay {
     position: fixed; 

@@ -1,49 +1,51 @@
 //wait for dom to finish loading before runnning the game.
 //add game area and buttons with event listeners
 
-var game = {
+let game = {
     /* level layout */
     layout: [
         [0, 1, 0, 0, 0, 0],
         [0, 1, 0, 1, 1, 0],
         [0, 0, 0, 0, 1, 0],
-        [1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 0],
         [0, 0, 0, 0, 1, 0],
         [0, 1, 1, 0, 0, 0]
     ],
     newPositionX: 0,
     newPositionY: 0,
+    leaderboard: [],
+    startTime: null,
+    stopTime: null
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-        /* creates game grid*/
-
+document.addEventListener("DOMContentLoaded", loadGame)
+/** 
+ * creates game grid
+ **/ 
+function loadGame() {
+    
         let building = document.querySelector('.game-building');
         let width = 28;
 
         let gameSquares = [];
 
-        function createBoard() {
-            for (let i = 0; i < game.layout.length; i++) {
-                gameSquares[i] = [];
-                for(let j = 0; j < game.layout[i].length; j++) {
-                    let location = document.createElement('div');
-                    building.appendChild(location);
-                    gameSquares[i][j] = location;
-            
-                    //add layout to the board
-                    if (game.layout[i][j] === 1) {
-                        gameSquares[i][j].classList.add('wall');
-                    }
-                    if (game.layout[i][j] === 0) {
-                        gameSquares[i][j].classList.add('corridor');
-                    }
+        
+        for (let i = 0; i < game.layout.length; i++) {
+            gameSquares[i] = [];
+            for(let j = 0; j < game.layout[i].length; j++) {
+                let location = document.createElement('div');
+                building.appendChild(location);
+                gameSquares[i][j] = location;
+
+                //add layout to the board
+                if (game.layout[i][j] === 1) {
+                    gameSquares[i][j].classList.add('wall');
+                }
+                if (game.layout[i][j] === 0) {
+                    gameSquares[i][j].classList.add('corridor');
                 }
             }
         }
-    createBoard();
-    
-
     //get the button elements and add event listeners. 
     let buttons = document.getElementsByClassName('menu')
 
@@ -54,14 +56,12 @@ document.addEventListener("DOMContentLoaded", function() {
             } else if (this.getAttribute("data-type") === "leaderboard"){
                 showLeaderboard();
             } else {
-                alert("Something went wrong!")
+                alert("Something went wrong!");
             }
         })
         
     }
-});
-
-let timer;
+};
 
 function runGame() {
 
@@ -81,7 +81,7 @@ function runGame() {
             } 
         })
     }
-timer = setInterval(countdownFunction, 1000);
+
 }
 
 function playerMove(x, y) {
@@ -117,13 +117,9 @@ function playerPositionDown() {
     playerMove(0,1);
 }
 
-
-
-
-
-
-
-
+/**
+ * starts a countdown until game will start
+ */
 function countDown() {
 
     let gameTimer = document.getElementById('countdown-text');
@@ -131,10 +127,10 @@ function countDown() {
     if (!gameTimer) {
         gameTimer = document.createElement('p');
         gameTimer.setAttribute("id", "countdown-text");
-        timer.appendChild(gameTimer);
+        countdown.appendChild(gameTimer);
     } 
 
-    let secondsLeft = 5;
+    let secondsLeft = 1;
     gameTimer.textContent = `Game will start in: ${secondsLeft} seconds`;
     let interval = setInterval(() => {
         secondsLeft--;
@@ -144,43 +140,50 @@ function countDown() {
             gameTimer.textContent = "Game started!";
             runGame();
             startTimer();
-            console.log('game is running')
+            console.log('game is running');
 
         }
     }, 1000);
 }
 
-function startTimer(){}
+/** 
+ * starts game timer
+ **/ 
+function startTimer(){
+    const d = new Date();
+    game.startTime = d.getTime();
+}
 
+/** 
+ * stops game timer
+ **/
+function stopTimer(){
+    const d = new Date();
+    game.stopTime = d.getTime();
+}
 
-function stopTimer(){}
-
-function updateLeaderboard(){
+/*function updateLeaderboard(){
     let leaderboardEntries = [];
     let leaderboardEntry = {};
 
 
-}
+}*/
 
-
-
-
-
-
+//consider cutting leaderboard out
 function showLeaderboard() {
     let leaderBoardOverlay = document.querySelector('#leaderboard-overlay');
     let overlayContentBlock = document.createElement('div');
     let exitLeaderboard = document.createElement('button');
-    let leaderboardList = document.createElement('ol')
+    let leaderboardList = document.createElement('ol');
 
     for (let i = 1; i <= 3; i++) {
     let li = document.createElement("li");
     li.innerHTML = "List item " + i;
     leaderboardList.appendChild(li);
     }
-    leaderboardList.classList.add('leaderboard-list')
+    leaderboardList.classList.add('leaderboard-list');
 
-    overlayContentBlock.appendChild(leaderboardList)
+    overlayContentBlock.appendChild(leaderboardList);
 
     leaderBoardOverlay.textContent = '';
     exitLeaderboard.classList.add('btn-exit');
@@ -190,34 +193,42 @@ function showLeaderboard() {
     exitLeaderboard.addEventListener("click", hideLeaderboard);
 
 
-    document.getElementById('victory-screen-overlay').style.display = 'block';
+    document.getElementById('leaderboard-overlay').style.display = 'block';
 }
 
 function hideLeaderboard() {
     document.getElementById('victory-screen-overlay').style.display = 'none';
 }
 
+//displays an overlay with a victory message upon reaching the goal
+
 function displayVictoryScreen() {
-    clearInterval(timer);
     document.getElementById('victory-screen-overlay').style.display = 'block';
     let victoryScreenOverlay = document.querySelector('#victory-screen-overlay');
     let overlayContentBlock = document.createElement('div');
     let exitVictoryScreen = document.createElement('button');
+    overlayContentBlock.classList.add('overlay-content-block');
+    victoryScreenOverlay.appendChild(overlayContentBlock);
+    overlayContentBlock.appendChild(exitVictoryScreen);
+    exitVictoryScreen.classList.add('btn-exit');
 
     let usernameInput = document.createElement('input');
     usernameInput.setAttribute('type', 'text');
-    usernameInput.setAttribute('id', 'username-input')
+    usernameInput.setAttribute('id', 'username-input');
     overlayContentBlock.appendChild(usernameInput);
 
+    
 
+    let victoryMessage = document.createElement('p').innerHTML = `Yay! You made it out in: ${game.stopTime - game.startTime} seconds!`;
+    overlayContentBlock.appendChild(victoryMessage);
 
-    victoryScreenOverlay.textContent = '';
-    exitVictoryScreen.classList.add('btn-exit');
-    overlayContentBlock.classList.add('overlay-content-block');
-    overlayContentBlock.appendChild(exitVictoryScreen);
-    victoryScreenOverlay.appendChild(overlayContentBlock);
+    
+    
+
+    
+    
+
     exitVictoryScreen.addEventListener("click", hideLeaderboard);
-
 
 }
 
