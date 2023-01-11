@@ -11,8 +11,8 @@ var game = {
         [0, 0, 0, 0, 1, 0],
         [0, 1, 1, 0, 0, 0]
     ],
-    player_pos_x: 0,
-    player_pos_y: 0
+    newPositionX: 0,
+    newPositionY: 0,
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let button of buttons){
         button.addEventListener('click', function() {
             if (this.getAttribute("data-type") === "start-game"){
-                startGametimer();
+                countDown();
             } else if (this.getAttribute("data-type") === "leaderboard"){
                 showLeaderboard();
             } else {
@@ -61,38 +61,42 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+let timer;
+
 function runGame() {
+
+    // Event listeners for navigation buttons
     let navigationButtons = document.getElementsByClassName('nav-btn')
     
     for (let button of navigationButtons){
         button.addEventListener('click', function(){
             if (this.getAttribute('id') === 'up'){
                 playerPositionUp();
-                console.log('move player up')
             } else if (this.getAttribute('id') === 'left') {
                 playerPositionLeft();
-                console.log('move player left')
             } else if (this.getAttribute('id') === 'right'){
                 playerPositionRight();
-                console.log('move player right')
             } else if (this.getAttribute('id') === 'down'){
                 playerPositionDown();
-                console.log('move player down');
             } 
         })
     }
+timer = setInterval(countdownFunction, 1000);
 }
 
-
 function playerMove(x, y) {
-    var new_pos_x = Math.max(0, Math.min(5, game.player_pos_x+x));
-    var new_pos_y = Math.max(0, Math.min(5, game.player_pos_y+y));
-    if (game.layout[new_pos_y][new_pos_x] == 0) {
-        game.player_pos_x = new_pos_x;
-        game.player_pos_y = new_pos_y;
-        console.log('New pos: '+game.player_pos_x+', '+game.player_pos_y);
-    }
-    else {
+    let newPositionX = Math.max(0, Math.min(5, game.newPositionX+x));
+    let newPositionY = Math.max(0, Math.min(5, game.newPositionY+y));
+
+    if (game.layout[newPositionY][newPositionX] === 0 ) {
+        game.newPositionX = newPositionX;
+        game.newPositionY = newPositionY;
+        if (newPositionX === 0 && newPositionY === 5){
+            console.log("You made it out of the building, Well Done!")
+            displayVictoryScreen();
+        }
+        console.log('New pos: ' + game.newPositionX + ', ' + game.newPositionY); 
+    } else { 
         console.log('Invalid position');
     }
 }
@@ -114,7 +118,13 @@ function playerPositionDown() {
 }
 
 
-function startGametimer() {
+
+
+
+
+
+
+function countDown() {
 
     let gameTimer = document.getElementById('countdown-text');
 
@@ -133,31 +143,90 @@ function startGametimer() {
             clearInterval(interval);
             gameTimer.textContent = "Game started!";
             runGame();
+            startTimer();
             console.log('game is running')
+
         }
     }, 1000);
 }
 
+function startTimer(){}
+
+
+function stopTimer(){}
+
+function updateLeaderboard(){
+    let leaderboardEntries = [];
+    let leaderboardEntry = {};
+
+
+}
+
+
+
+
 
 
 function showLeaderboard() {
-    let overlay = document.querySelector('#leaderboard-overlay');
-    let leaderboardArea = document.createElement('div');
+    let leaderBoardOverlay = document.querySelector('#leaderboard-overlay');
+    let overlayContentBlock = document.createElement('div');
     let exitLeaderboard = document.createElement('button');
+    let leaderboardList = document.createElement('ol')
 
-    overlay.textContent = '';
-    exitLeaderboard.classList.add('btn-exit-leaderboard');
-    leaderboardArea.classList.add('leaderboard-area');
-    leaderboardArea.appendChild(exitLeaderboard);
-    overlay.appendChild(leaderboardArea);
+    for (let i = 1; i <= 3; i++) {
+    let li = document.createElement("li");
+    li.innerHTML = "List item " + i;
+    leaderboardList.appendChild(li);
+    }
+    leaderboardList.classList.add('leaderboard-list')
+
+    overlayContentBlock.appendChild(leaderboardList)
+
+    leaderBoardOverlay.textContent = '';
+    exitLeaderboard.classList.add('btn-exit');
+    overlayContentBlock.classList.add('overlay-content-block');
+    overlayContentBlock.appendChild(exitLeaderboard);
+    leaderBoardOverlay.appendChild(overlayContentBlock);
     exitLeaderboard.addEventListener("click", hideLeaderboard);
 
-    document.getElementById('leaderboard-overlay').style.display = 'block';
+
+    document.getElementById('victory-screen-overlay').style.display = 'block';
 }
 
 function hideLeaderboard() {
-    document.getElementById('leaderboard-overlay').style.display = 'none';
+    document.getElementById('victory-screen-overlay').style.display = 'none';
 }
+
+function displayVictoryScreen() {
+    clearInterval(timer);
+    document.getElementById('victory-screen-overlay').style.display = 'block';
+    let victoryScreenOverlay = document.querySelector('#victory-screen-overlay');
+    let overlayContentBlock = document.createElement('div');
+    let exitVictoryScreen = document.createElement('button');
+
+    let usernameInput = document.createElement('input');
+    usernameInput.setAttribute('type', 'text');
+    usernameInput.setAttribute('id', 'username-input')
+    overlayContentBlock.appendChild(usernameInput);
+
+
+
+    victoryScreenOverlay.textContent = '';
+    exitVictoryScreen.classList.add('btn-exit');
+    overlayContentBlock.classList.add('overlay-content-block');
+    overlayContentBlock.appendChild(exitVictoryScreen);
+    victoryScreenOverlay.appendChild(overlayContentBlock);
+    exitVictoryScreen.addEventListener("click", hideLeaderboard);
+
+
+}
+
+function hideVictoryScreen() {
+    document.getElementById('victory-screen-overlay').style.display = 'none';
+}
+
+
+
 
 
 
