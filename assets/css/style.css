@@ -117,3 +117,7 @@ body {
   .current-position {
     background: red;
   }
+
+  .maze-exit {
+    background: yellow;
+  }

@@ -17,12 +17,12 @@ let game = {
     startTime: null,
     stopTime: null,
     exitX: 0,
-    exitY: 5
+    exitY: 5,
+    Running: false
 }
 
 document.addEventListener("DOMContentLoaded", loadGame)
 
-let gameRunning = false;
 
 /** 
  * creates game grid
@@ -53,9 +53,12 @@ function loadGame() {
                     gameSquares[i][j].classList.add('corridor');
                 }
             }
-            getPlayerCurrentposition();
         }
-    //get the button elements and add event listeners. 
+
+        let p = document.getElementById(`c${game.exitY}-${game.exitX}`);
+        p.classList.add('current-position');
+        
+        //get the button elements and add event listeners. 
     let buttons = document.getElementsByClassName('menu')
 
     for (let button of buttons){
@@ -73,13 +76,17 @@ function loadGame() {
 
 function runGame() {
 
-    gameRunning = true;
+    game.Running = true;
 
     getPlayerCurrentposition()
+
+
+    window.addEventListener('keyup', handleKeyboardInput)
+
 }
 
 function stopNavigation() {
-    gameRunning = false;
+    game.Running = false;
 }
 
 //add eventlisteners to navigation buttons if game is running
@@ -87,7 +94,6 @@ let navigationButtons = document.getElementsByClassName('nav-btn')
 
 for (let button of navigationButtons) {
     button.addEventListener('click', function() {
-        if (!gameRunning) return;
         if (this.getAttribute('id') === 'up') {
             playerPositionUp();
         } else if (this.getAttribute('id') === 'left') {
@@ -102,25 +108,41 @@ for (let button of navigationButtons) {
 
 
 
+function handleKeyboardInput(e){
+    if (e.key === 'ArrowUp') {
+        playerPositionUp();
+    } else if (e.key === 'ArrowLeft') {
+        playerPositionLeft();
+    } else if (e.key === 'ArrowRight') {
+        playerPositionRight();
+    } else if (e.key === 'ArrowDown') {
+        playerPositionDown();
+    }
+  }
+
+
 
 function playerMove(x, y) {
-    let newPositionX = Math.max(0, Math.min(5, game.newPositionX+x));
-    let newPositionY = Math.max(0, Math.min(5, game.newPositionY+y));
+    if (game.Running)
+    {
+        let newPositionX = Math.max(0, Math.min(5, game.newPositionX+x));
+        let newPositionY = Math.max(0, Math.min(5, game.newPositionY+y));
 
-    if (game.layout[newPositionY][newPositionX] === 0 ) {
-        game.newPositionX = newPositionX;
-        game.newPositionY = newPositionY;
-        updatePlayerPositionDisplay()
-        if (newPositionX === game.exitX && newPositionY === game.exitY){
-            console.log("You made it out of the building, Well Done!")
-            stopTimer();
-            displayVictoryScreen();
+        if (game.layout[newPositionY][newPositionX] === 0 ) {
+            game.newPositionX = newPositionX;
+            game.newPositionY = newPositionY;
+            updatePlayerPositionDisplay()
+            if (newPositionX === game.exitX && newPositionY === game.exitY){
+                console.log("You made it out of the building, Well Done!")
+                stopTimer();
+                displayVictoryScreen();
+            }
+            console.log('New pos: ' + game.newPositionY + ', ' + game.newPositionX); 
+        } else { 
+            console.log('Invalid position');
         }
-        console.log('New pos: ' + game.newPositionY + ', ' + game.newPositionX); 
-    } else { 
-        console.log('Invalid position');
+        getPlayerCurrentposition()
     }
-    getPlayerCurrentposition()
 }
 
 function updatePlayerPositionDisplay(){
@@ -131,12 +153,9 @@ function updatePlayerPositionDisplay(){
       div.classList.remove("current-position")
     })
 }
-function getPlayerCurrentposition(){
-
-let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
-
-playerCurrentPosition.classList.add('current-position')
-
+function getPlayerCurrentposition() {
+    let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
+    playerCurrentPosition.classList.add('current-position');
 }
 
 
@@ -161,6 +180,8 @@ function playerPositionDown() {
  */
 function countDown() {
 
+    stopNavigation()
+
     updatePlayerPositionDisplay()
 
     game.newPositionX = 0;
@@ -174,7 +195,7 @@ function countDown() {
         countdown.appendChild(gameTimer);
     } 
 
-    let secondsLeft = 1;
+    let secondsLeft = 5;
     gameTimer.textContent = `Game will start in: ${secondsLeft} seconds`;
     let interval = setInterval(() => {
         secondsLeft--;
@@ -241,6 +262,8 @@ function hideLeaderboard() {
 
 function displayVictoryScreen() {
 
+    stopNavigation()
+
     let victoryScreenOverlay = document.querySelector('#victory-screen-overlay');
     let overlayContentBlock = document.createElement('div');
     let exitVictoryScreen = document.createElement('button');
@@ -261,7 +284,7 @@ function displayVictoryScreen() {
     overlayContentBlock.appendChild(victoryMessage);
     document.getElementById('victory-screen-overlay').style.display = 'block';
 
-    console.log(gameRunning)
+    console.log(game.Running)
     
 }
 
