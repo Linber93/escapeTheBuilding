@@ -37,6 +37,7 @@ body {
     border: solid black;
     display: flex;
     flex-wrap: wrap;
+    background: #ffffff;
 }
 
 .wall {
@@ -51,21 +52,29 @@ body {
     height: 16.67%;
 }
 
+.nav-btn {
+  border-radius: 8px;
+  font-size: 40px;
+  width: 50px;
+  height: 50px;
+  color: rgb(104, 104, 104);
+}
+
+.controls {
+  display: flex;
+  width: 150px;
+  flex-wrap: wrap;
+  margin: 20px auto
+}
 
 
-#leaderboard-overlay {
-    position: fixed; 
-    display: none; 
-    width: 100%; 
-    height: 100%; 
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-  }
+.nav-anchor {
+  width: 50px;
+  height: 50px;
+}
+
+
+
 
 
   .overlay-content-block {
@@ -109,13 +118,12 @@ body {
     cursor: pointer; 
   }
 
-  .leaderboard-list {
-    margin: 40% auto;
-    font-size: 3rem;
-  }
+
+
 
   .current-position {
     background: red;
+    border-radius: 50%;
   }
 
   .exit-location {
