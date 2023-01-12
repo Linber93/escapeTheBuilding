@@ -36,8 +36,8 @@ function loadGame() {
             gameSquares[i] = [];
             for(let j = 0; j < game.layout[i].length; j++) {
                 let location = document.createElement('div');
-                location.dataset.x = i
-                location.dataset.y = j
+                location.dataset.x = j
+                location.dataset.y = i
                 location.id = `c${i}-${j}`
                 building.appendChild(location);
                 gameSquares[i][j] = location;
@@ -71,6 +71,7 @@ function loadGame() {
 function runGame() {
 
     getPlayerCurrentposition()
+    
 
     // Event listeners for navigation buttons
     let navigationButtons = document.getElementsByClassName('nav-btn')
@@ -148,6 +149,8 @@ function playerPositionDown() {
  * starts a countdown until game will start
  */
 function countDown() {
+
+    updatePlayerPositionDisplay()
 
     game.newPositionX = 0;
     game.newPositionY = 0;
@@ -248,16 +251,6 @@ function displayVictoryScreen() {
     overlayContentBlock.appendChild(victoryMessage);
     document.getElementById('victory-screen-overlay').style.display = 'block';
     
-    
-
-    
-
-    
-    
-    
-    
-    
-
     
 }
 
