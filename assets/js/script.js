@@ -55,8 +55,8 @@ function loadGame() {
             }
         }
 
-        let p = document.getElementById(`c${game.exitY}-${game.exitX}`);
-        p.classList.add('current-position');
+        let mazeExit = document.getElementById(`c${game.exitY}-${game.exitX}`);
+        mazeExit.classList.add('exit-location');
         
         //get the button elements and add event listeners. 
     let buttons = document.getElementsByClassName('menu')
@@ -158,6 +158,9 @@ function getPlayerCurrentposition() {
     playerCurrentPosition.classList.add('current-position');
 }
 
+
+let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
+    playerCurrentPosition.classList.add('current-position');
 
 function playerPositionUp() {
     playerMove(0,-1);
