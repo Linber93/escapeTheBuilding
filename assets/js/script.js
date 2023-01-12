@@ -16,11 +16,14 @@ let game = {
     leaderboard: [],
     startTime: null,
     stopTime: null,
-    exitX: 5,
-    exitY: 0
+    exitX: 0,
+    exitY: 5
 }
 
 document.addEventListener("DOMContentLoaded", loadGame)
+
+let gameRunning = false;
+
 /** 
  * creates game grid
  **/ 
@@ -70,27 +73,35 @@ function loadGame() {
 
 function runGame() {
 
+    gameRunning = true;
+
     getPlayerCurrentposition()
-    
-
-    // Event listeners for navigation buttons
-    let navigationButtons = document.getElementsByClassName('nav-btn')
-    
-    for (let button of navigationButtons){
-        button.addEventListener('click', function(){
-            if (this.getAttribute('id') === 'up'){
-                playerPositionUp();
-            } else if (this.getAttribute('id') === 'left') {
-                playerPositionLeft();
-            } else if (this.getAttribute('id') === 'right'){
-                playerPositionRight();
-            } else if (this.getAttribute('id') === 'down'){
-                playerPositionDown();
-            } 
-        })
-    }
-
 }
+
+function stopNavigation() {
+    gameRunning = false;
+}
+
+//add eventlisteners to navigation buttons if game is running
+let navigationButtons = document.getElementsByClassName('nav-btn')
+
+for (let button of navigationButtons) {
+    button.addEventListener('click', function() {
+        if (!gameRunning) return;
+        if (this.getAttribute('id') === 'up') {
+            playerPositionUp();
+        } else if (this.getAttribute('id') === 'left') {
+            playerPositionLeft();
+        } else if (this.getAttribute('id') === 'right') {
+            playerPositionRight();
+        } else if (this.getAttribute('id') === 'down') {
+            playerPositionDown();
+        }
+    });
+}
+
+
+
 
 function playerMove(x, y) {
     let newPositionX = Math.max(0, Math.min(5, game.newPositionX+x));
@@ -105,7 +116,7 @@ function playerMove(x, y) {
             stopTimer();
             displayVictoryScreen();
         }
-        console.log('New pos: ' + game.newPositionX + ', ' + game.newPositionY); 
+        console.log('New pos: ' + game.newPositionY + ', ' + game.newPositionX); 
     } else { 
         console.log('Invalid position');
     }
@@ -122,7 +133,7 @@ function updatePlayerPositionDisplay(){
 }
 function getPlayerCurrentposition(){
 
-let playerCurrentPosition = document.getElementById(`c${game.newPositionX}-${game.newPositionY}`);
+let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
 
 playerCurrentPosition.classList.add('current-position')
 
@@ -130,19 +141,19 @@ playerCurrentPosition.classList.add('current-position')
 
 
 function playerPositionUp() {
-    playerMove(-1,0);
+    playerMove(0,-1);
 } 
 
 function playerPositionLeft() {
-    playerMove(0,-1);  
+    playerMove(-1,0);  
 }
 
 function playerPositionRight() {
-    playerMove(0,1);
+    playerMove(1,0);
 }
 
 function playerPositionDown() {
-    playerMove(1,0);
+    playerMove(0,1);
 }
 
 /**
@@ -230,7 +241,6 @@ function hideLeaderboard() {
 
 function displayVictoryScreen() {
 
-    
     let victoryScreenOverlay = document.querySelector('#victory-screen-overlay');
     let overlayContentBlock = document.createElement('div');
     let exitVictoryScreen = document.createElement('button');
@@ -250,7 +260,8 @@ function displayVictoryScreen() {
     victoryMessage.innerHTML = `Yay! You made it out in: ${formattedTime} seconds!`;
     overlayContentBlock.appendChild(victoryMessage);
     document.getElementById('victory-screen-overlay').style.display = 'block';
-    
+
+    console.log(gameRunning)
     
 }
 
