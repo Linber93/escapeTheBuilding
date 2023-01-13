@@ -1,6 +1,5 @@
 //wait for dom to finish loading before runnning the game.
 //add game area and buttons with event listeners
-
 let game = {
     /* level layout */
     layout: [
@@ -26,43 +25,43 @@ document.addEventListener("DOMContentLoaded", loadGame);
 
 /** 
  * creates game grid
- **/ 
+ **/
 function loadGame() {
-    
-        let building = document.querySelector('.game-building');
 
-        let gameSquares = [];
+    let building = document.querySelector('.game-building');
 
-        
-        for (let i = 0; i < game.layout.length; i++) {
-            gameSquares[i] = [];
-            for(let j = 0; j < game.layout[i].length; j++) {
-                let location = document.createElement('div');
-                location.dataset.x = j;
-                location.dataset.y = i;
-                location.id = `c${i}-${j}`;
-                building.appendChild(location);
-                gameSquares[i][j] = location;
+    let gameSquares = [];
 
-                //add layout to the board
-                if (game.layout[i][j] === 1) {
-                    gameSquares[i][j].classList.add('wall');
-                }
-                if (game.layout[i][j] === 0) {
-                    gameSquares[i][j].classList.add('corridor');
-                }
+
+    for (let i = 0; i < game.layout.length; i++) {
+        gameSquares[i] = [];
+        for (let j = 0; j < game.layout[i].length; j++) {
+            let location = document.createElement('div');
+            location.dataset.x = j;
+            location.dataset.y = i;
+            location.id = `c${i}-${j}`;
+            building.appendChild(location);
+            gameSquares[i][j] = location;
+
+            //add layout to the board
+            if (game.layout[i][j] === 1) {
+                gameSquares[i][j].classList.add('wall');
+            }
+            if (game.layout[i][j] === 0) {
+                gameSquares[i][j].classList.add('corridor');
             }
         }
+    }
 
-        let mazeExit = document.getElementById(`c${game.exitY}-${game.exitX}`);
-        mazeExit.classList.add('exit-location');
-        
-        //get the button elements and add event listeners. 
+    let mazeExit = document.getElementById(`c${game.exitY}-${game.exitX}`);
+    mazeExit.classList.add('exit-location');
+
+    //get the button elements and add event listeners. 
     let buttons = document.getElementsByClassName('start-game');
 
-    for (let button of buttons){
+    for (let button of buttons) {
         button.addEventListener('click', function() {
-            if (this.getAttribute("data-type") === "start-game"){
+            if (this.getAttribute("data-type") === "start-game") {
                 countDown();
             } else {
                 alert("Something went wrong!");
@@ -105,7 +104,7 @@ for (let button of navigationButtons) {
 
 
 
-function handleKeyboardInput(e){
+function handleKeyboardInput(e) {
     if (e.key === 'ArrowUp') {
         playerPositionUp();
     } else if (e.key === 'ArrowLeft') {
@@ -115,63 +114,63 @@ function handleKeyboardInput(e){
     } else if (e.key === 'ArrowDown') {
         playerPositionDown();
     }
-  }
+}
 
 
 
 function playerMove(x, y) {
-    if (game.Running)
-    {
-        let newPositionX = Math.max(0, Math.min(5, game.newPositionX+x));
-        let newPositionY = Math.max(0, Math.min(5, game.newPositionY+y));
+    if (game.Running) {
+        let newPositionX = Math.max(0, Math.min(5, game.newPositionX + x));
+        let newPositionY = Math.max(0, Math.min(5, game.newPositionY + y));
 
-        if (game.layout[newPositionY][newPositionX] === 0 ) {
+        if (game.layout[newPositionY][newPositionX] === 0) {
             game.newPositionX = newPositionX;
             game.newPositionY = newPositionY;
             updatePlayerPositionDisplay();
-            if (newPositionX === game.exitX && newPositionY === game.exitY){
+            if (newPositionX === game.exitX && newPositionY === game.exitY) {
                 console.log("You made it out of the building, Well Done!");
                 stopTimer();
                 displayVictoryScreen();
             }
-            console.log('New pos: ' + game.newPositionY + ', ' + game.newPositionX); 
-        } else { 
+            console.log('New pos: ' + game.newPositionY + ', ' + game.newPositionX);
+        } else {
             console.log('Invalid position');
         }
         getPlayerCurrentposition();
     }
 }
 
-function updatePlayerPositionDisplay(){
+function updatePlayerPositionDisplay() {
     // Remove the current position class from whichever cell(s) has/have it.
     // Assuming the possibility that multiple cells might be marked as current
     // to be safe.
     document.querySelectorAll('.current-position').forEach((div, i) => {
-      div.classList.remove("current-position");
+        div.classList.remove("current-position");
     });
 }
+
 function getPlayerCurrentposition() {
     let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
     playerCurrentPosition.classList.add('current-position');
 }
 
 let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
-    playerCurrentPosition.classList.add('current-position');
+playerCurrentPosition.classList.add('current-position');
 
 function playerPositionUp() {
-    playerMove(0,-1);
-} 
+    playerMove(0, -1);
+}
 
 function playerPositionLeft() {
-    playerMove(-1,0);  
+    playerMove(-1, 0);
 }
 
 function playerPositionRight() {
-    playerMove(1,0);
+    playerMove(1, 0);
 }
 
 function playerPositionDown() {
-    playerMove(0,1);
+    playerMove(0, 1);
 }
 
 /**
@@ -194,7 +193,7 @@ function countDown() {
         gameTimer = document.createElement('p');
         gameTimer.setAttribute("id", "countdown-text");
         countdown.appendChild(gameTimer);
-    } 
+    }
 
     let secondsLeft = 5;
     gameTimer.textContent = `Game will start in: ${secondsLeft} seconds`;
@@ -214,8 +213,8 @@ function countDown() {
 
 /** 
  * starts game timer
- **/ 
-function startTimer(){
+ **/
+function startTimer() {
     const d = new Date();
     game.startTime = d.getTime();
 }
@@ -223,7 +222,7 @@ function startTimer(){
 /** 
  * stops game timer
  **/
-function stopTimer(){
+function stopTimer() {
     const d = new Date();
     game.stopTime = d.getTime();
 }
@@ -256,16 +255,9 @@ function displayVictoryScreen() {
     document.getElementById('victory-screen-overlay').style.display = 'block';
 
     console.log(game.Running);
-    
+
 }
 
 function hideVictoryScreen() {
     document.getElementById('victory-screen-overlay').style.display = 'none';
 }
-
-
-
-
-
-
-
