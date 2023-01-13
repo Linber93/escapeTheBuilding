@@ -37,9 +37,7 @@ for (let button of navigationButtons) {
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', loadGame);
-
 
 /** 
  * creates game grid
@@ -108,8 +106,6 @@ function stopNavigation() {
     game.Running = false;
 }
 
-
-
 /** allows keyboard inputs as movement commands */
 function handleKeyboardInput(e) {
     if (e.key === 'ArrowUp') {
@@ -122,7 +118,6 @@ function handleKeyboardInput(e) {
         playerPositionDown();
     }
 }
-
 
 /** movement commands */
 function playerMove(x, y) {
@@ -162,7 +157,6 @@ function getPlayerCurrentposition() {
     let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
     playerCurrentPosition.classList.add('current-position');
 }
-
 
 /** move player up */
 function playerPositionUp() {
