@@ -19,9 +19,9 @@ let game = {
     exitX: 0,
     exitY: 5,
     Running: false
-}
+};
 
-document.addEventListener("DOMContentLoaded", loadGame)
+document.addEventListener("DOMContentLoaded", loadGame);
 
 
 /** 
@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", loadGame)
 function loadGame() {
     
         let building = document.querySelector('.game-building');
-        let width = 28;
 
         let gameSquares = [];
 
@@ -39,9 +38,9 @@ function loadGame() {
             gameSquares[i] = [];
             for(let j = 0; j < game.layout[i].length; j++) {
                 let location = document.createElement('div');
-                location.dataset.x = j
-                location.dataset.y = i
-                location.id = `c${i}-${j}`
+                location.dataset.x = j;
+                location.dataset.y = i;
+                location.id = `c${i}-${j}`;
                 building.appendChild(location);
                 gameSquares[i][j] = location;
 
@@ -59,29 +58,27 @@ function loadGame() {
         mazeExit.classList.add('exit-location');
         
         //get the button elements and add event listeners. 
-    let buttons = document.getElementsByClassName('start-game')
+    let buttons = document.getElementsByClassName('start-game');
 
     for (let button of buttons){
         button.addEventListener('click', function() {
             if (this.getAttribute("data-type") === "start-game"){
                 countDown();
-            } else if (this.getAttribute("data-type") === "leaderboard"){
-                showLeaderboard();
             } else {
                 alert("Something went wrong!");
             }
-        })
+        });
     }
-};
+}
 
 function runGame() {
 
     game.Running = true;
 
-    getPlayerCurrentposition()
+    getPlayerCurrentposition();
 
 
-    window.addEventListener('keyup', handleKeyboardInput)
+    window.addEventListener('keyup', handleKeyboardInput);
 
 }
 
@@ -90,7 +87,7 @@ function stopNavigation() {
 }
 
 //add eventlisteners to navigation buttons if game is running
-let navigationButtons = document.getElementsByClassName('nav-btn')
+let navigationButtons = document.getElementsByClassName('nav-btn');
 
 for (let button of navigationButtons) {
     button.addEventListener('click', function() {
@@ -131,9 +128,9 @@ function playerMove(x, y) {
         if (game.layout[newPositionY][newPositionX] === 0 ) {
             game.newPositionX = newPositionX;
             game.newPositionY = newPositionY;
-            updatePlayerPositionDisplay()
+            updatePlayerPositionDisplay();
             if (newPositionX === game.exitX && newPositionY === game.exitY){
-                console.log("You made it out of the building, Well Done!")
+                console.log("You made it out of the building, Well Done!");
                 stopTimer();
                 displayVictoryScreen();
             }
@@ -141,7 +138,7 @@ function playerMove(x, y) {
         } else { 
             console.log('Invalid position');
         }
-        getPlayerCurrentposition()
+        getPlayerCurrentposition();
     }
 }
 
@@ -150,14 +147,13 @@ function updatePlayerPositionDisplay(){
     // Assuming the possibility that multiple cells might be marked as current
     // to be safe.
     document.querySelectorAll('.current-position').forEach((div, i) => {
-      div.classList.remove("current-position")
-    })
+      div.classList.remove("current-position");
+    });
 }
 function getPlayerCurrentposition() {
     let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
     playerCurrentPosition.classList.add('current-position');
 }
-
 
 let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
     playerCurrentPosition.classList.add('current-position');
@@ -183,12 +179,14 @@ function playerPositionDown() {
  */
 function countDown() {
 
-    stopNavigation()
+    stopNavigation();
 
-    updatePlayerPositionDisplay()
+    updatePlayerPositionDisplay();
 
     game.newPositionX = 0;
     game.newPositionY = 0;
+
+    let countdown = document.getElementById('countdown')
 
     let gameTimer = document.getElementById('countdown-text');
 
@@ -214,9 +212,6 @@ function countDown() {
     }, 1000);
 }
 
-
-
-
 /** 
  * starts game timer
  **/ 
@@ -237,7 +232,7 @@ function stopTimer(){
 
 function displayVictoryScreen() {
 
-    stopNavigation()
+    stopNavigation();
 
     let victoryScreenOverlay = document.querySelector('#victory-screen-overlay');
     let overlayContentBlock = document.createElement('div');
@@ -245,7 +240,7 @@ function displayVictoryScreen() {
     victoryScreenOverlay.textContent = '';
     exitVictoryScreen.classList.add('btn-exit');
     exitVictoryScreen.addEventListener("click", hideVictoryScreen);
-    exitVictoryScreen.innerHTML = `<i class="fa-solid fa-xmark"></i>`
+    exitVictoryScreen.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
 
     overlayContentBlock.classList.add('overlay-content-block');
     victoryScreenOverlay.appendChild(overlayContentBlock);
@@ -260,7 +255,7 @@ function displayVictoryScreen() {
     overlayContentBlock.appendChild(victoryMessage);
     document.getElementById('victory-screen-overlay').style.display = 'block';
 
-    console.log(game.Running)
+    console.log(game.Running);
     
 }
 
