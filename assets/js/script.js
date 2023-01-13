@@ -75,13 +75,17 @@ function loadGame() {
     mazeExit.classList.add('exit-location');
 
     //get the button elements and add event listeners. 
-    let button = document.getElementsByClassName('start-game');
+    let buttons = document.getElementsByClassName('start-game');
+
+    for (let button of buttons) {
         button.addEventListener('click', function() {
             if (this.getAttribute('data-type') === "start-game") {
                 countDown();
-            } 
+            } else {
+                alert('Something went wrong!');
+            }
         });
-    
+    }
 }
 /**
  * creates event listener to accept keyboard arrowkeys as inputs and updates current position
