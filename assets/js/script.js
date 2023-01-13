@@ -86,7 +86,7 @@ function stopNavigation() {
 }
 
 //add eventlisteners to navigation buttons if game is running
-let navigationButtons = document.getElementsByClassName('nav-btn');
+let navigationButtons = document.getElementsByClassName('nav-button');
 
 for (let button of navigationButtons) {
     button.addEventListener('click', function() {

@@ -1,13 +1,10 @@
-# Escape The building
-## Resume
+# Escape The Building
 
+[View deployed site here](https://linber93.github.io/escapeTheBuilding/)
 
-[View deployed site here](https://linber93.github.io/CIPP1/)
+This is website includes a game for anyone looking for way to kill a few minutes of time
 
-This is a website to complement a traditional resume, as well as showcasing my current skills in HTML and CSS. In this resume you will find a detailed overview of my professional background, including my education, employment history, and key accomplishments.
-In addition to my resume, you can also find links to online profiles and any additional resources or materials that may be of interest.
-
-![Website shown on different devices](https://github.com/Linber93/CIPP1/blob/main/assets/media/preview.png)
+![Website shown on different devices](../assets/readme/escape-the-building-responsiveness.png)
 
 
 ### Features
