@@ -59,7 +59,7 @@ function loadGame() {
         mazeExit.classList.add('exit-location');
         
         //get the button elements and add event listeners. 
-    let buttons = document.getElementsByClassName('menu')
+    let buttons = document.getElementsByClassName('start-game')
 
     for (let button of buttons){
         button.addEventListener('click', function() {
@@ -233,34 +233,6 @@ function stopTimer(){
     game.stopTime = d.getTime();
 }
 
-/*function updateLeaderboard(){
-    let leaderboardEntries = [];
-    let leaderboardEntry = {};
-
-
-}*/
-
-//consider cutting leaderboard out
-function showLeaderboard() {
-    let leaderBoardOverlay = document.querySelector('#leaderboard-overlay');
-    let overlayContentBlock = document.createElement('div');
-    let exitLeaderboard = document.createElement('button');
-
-    leaderBoardOverlay.textContent = '';
-    exitLeaderboard.classList.add('btn-exit');
-    overlayContentBlock.classList.add('overlay-content-block');
-    overlayContentBlock.appendChild(exitLeaderboard);
-    leaderBoardOverlay.appendChild(overlayContentBlock);
-    exitLeaderboard.addEventListener("click", hideLeaderboard);
-
-
-    document.getElementById('leaderboard-overlay').style.display = 'block';
-}
-
-function hideLeaderboard() {
-    document.getElementById('leaderboard-overlay').style.display = 'none';
-}
-
 //displays an overlay with a victory message upon reaching the goal
 
 function displayVictoryScreen() {
@@ -273,6 +245,7 @@ function displayVictoryScreen() {
     victoryScreenOverlay.textContent = '';
     exitVictoryScreen.classList.add('btn-exit');
     exitVictoryScreen.addEventListener("click", hideVictoryScreen);
+    exitVictoryScreen.innerHTML = `<i class="fa-solid fa-xmark"></i>`
 
     overlayContentBlock.classList.add('overlay-content-block');
     victoryScreenOverlay.appendChild(overlayContentBlock);
