@@ -21,7 +21,7 @@ body {
 .game-area {
     width: 70%;
     height: 65vh;
-    max-width: 800px;
+    max-width: 600px;
     max-height: 500px;
     background: rgb(185, 185, 185);
     margin: 0 auto;
@@ -32,8 +32,8 @@ body {
 
 .game-building {
     margin: 0 auto;
-    width: 15rem;
-    height: 15rem;
+    width: 240px;
+    height: 240px;
     border: solid black;
     display: flex;
     flex-wrap: wrap;
@@ -42,14 +42,14 @@ body {
 
 .wall {
     background-color: black;
-    width: 16.67%;
-    height: 16.67%;
+    width: 16.66%;
+    height: 16.66%;
 }
 
 .corridor {
     background: white;
-    width: 16.67%;
-    height: 16.67%;
+    width: 16.66%;
+    height: 16.66%;
 }
 
 .nav-btn {
