@@ -20,7 +20,25 @@ let game = {
     Running: false
 };
 
-document.addEventListener("DOMContentLoaded", loadGame);
+//add eventlisteners to navigation buttons if game is running
+let navigationButtons = document.getElementsByClassName('nav-button');
+
+for (let button of navigationButtons) {
+    button.addEventListener('click', function() {
+        if (this.getAttribute('id') === 'up') {
+            playerPositionUp();
+        } else if (this.getAttribute('id') === 'left') {
+            playerPositionLeft();
+        } else if (this.getAttribute('id') === 'right') {
+            playerPositionRight();
+        } else if (this.getAttribute('id') === 'down') {
+            playerPositionDown();
+        }
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', loadGame);
 
 
 /** 
@@ -53,6 +71,8 @@ function loadGame() {
         }
     }
 
+    
+
     let mazeExit = document.getElementById(`c${game.exitY}-${game.exitX}`);
     mazeExit.classList.add('exit-location');
 
@@ -61,49 +81,36 @@ function loadGame() {
 
     for (let button of buttons) {
         button.addEventListener('click', function() {
-            if (this.getAttribute("data-type") === "start-game") {
+            if (this.getAttribute('data-type') === "start-game") {
                 countDown();
             } else {
-                alert("Something went wrong!");
+                alert('Something went wrong!');
             }
         });
     }
 }
-
+/**
+ * creates event listener to accept keyboard arrowkeys as inputs and updates current position
+ */
 function runGame() {
 
     game.Running = true;
 
-    getPlayerCurrentposition();
+    let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
+    playerCurrentPosition.classList.add('current-position');
 
 
     window.addEventListener('keyup', handleKeyboardInput);
 
 }
-
+/** sets game running to false */
 function stopNavigation() {
     game.Running = false;
 }
 
-//add eventlisteners to navigation buttons if game is running
-let navigationButtons = document.getElementsByClassName('nav-button');
-
-for (let button of navigationButtons) {
-    button.addEventListener('click', function() {
-        if (this.getAttribute('id') === 'up') {
-            playerPositionUp();
-        } else if (this.getAttribute('id') === 'left') {
-            playerPositionLeft();
-        } else if (this.getAttribute('id') === 'right') {
-            playerPositionRight();
-        } else if (this.getAttribute('id') === 'down') {
-            playerPositionDown();
-        }
-    });
-}
 
 
-
+/** allows keyboard inputs as movement commands */
 function handleKeyboardInput(e) {
     if (e.key === 'ArrowUp') {
         playerPositionUp();
@@ -117,7 +124,7 @@ function handleKeyboardInput(e) {
 }
 
 
-
+/** movement commands */
 function playerMove(x, y) {
     if (game.Running) {
         let newPositionX = Math.max(0, Math.min(5, game.newPositionX + x));
@@ -128,7 +135,7 @@ function playerMove(x, y) {
             game.newPositionY = newPositionY;
             updatePlayerPositionDisplay();
             if (newPositionX === game.exitX && newPositionY === game.exitY) {
-                console.log("You made it out of the building, Well Done!");
+                console.log('You made it out of the building, Well Done!');
                 stopTimer();
                 displayVictoryScreen();
             }
@@ -139,36 +146,37 @@ function playerMove(x, y) {
         getPlayerCurrentposition();
     }
 }
-
-function updatePlayerPositionDisplay() {
-    // Remove the current position class from whichever cell(s) has/have it.
+// Remove the current position class from whichever cell(s) has/have it.
     // Assuming the possibility that multiple cells might be marked as current
     // to be safe.
+function updatePlayerPositionDisplay() {
+    
     document.querySelectorAll('.current-position').forEach((div, i) => {
-        div.classList.remove("current-position");
+        div.classList.remove('current-position');
     });
 }
-
+/**
+ * checks players current position and gives the div the class 'current-position'
+ */
 function getPlayerCurrentposition() {
     let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
     playerCurrentPosition.classList.add('current-position');
 }
 
-let playerCurrentPosition = document.getElementById(`c${game.newPositionY}-${game.newPositionX}`);
-playerCurrentPosition.classList.add('current-position');
 
+/** move player up */
 function playerPositionUp() {
     playerMove(0, -1);
 }
-
+/** move player left */
 function playerPositionLeft() {
     playerMove(-1, 0);
 }
-
+/** move player right */
 function playerPositionRight() {
     playerMove(1, 0);
 }
-
+/** move player down */
 function playerPositionDown() {
     playerMove(0, 1);
 }
@@ -191,7 +199,7 @@ function countDown() {
 
     if (!gameTimer) {
         gameTimer = document.createElement('p');
-        gameTimer.setAttribute("id", "countdown-text");
+        gameTimer.setAttribute('id', 'countdown-text');
         countdown.appendChild(gameTimer);
     }
 
@@ -202,7 +210,7 @@ function countDown() {
         gameTimer.textContent = `Game will start in: ${secondsLeft} seconds`;
         if (secondsLeft === 0) {
             clearInterval(interval);
-            gameTimer.textContent = "Game started!";
+            gameTimer.textContent = 'Game started!';
             runGame();
             startTimer();
             console.log('game is running');
@@ -238,7 +246,7 @@ function displayVictoryScreen() {
     let exitVictoryScreen = document.createElement('button');
     victoryScreenOverlay.textContent = '';
     exitVictoryScreen.classList.add('btn-exit');
-    exitVictoryScreen.addEventListener("click", hideVictoryScreen);
+    exitVictoryScreen.addEventListener('click', hideVictoryScreen);
     exitVictoryScreen.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
 
     overlayContentBlock.classList.add('overlay-content-block');
@@ -257,7 +265,7 @@ function displayVictoryScreen() {
     console.log(game.Running);
 
 }
-
+/** hides victory screen overlay */
 function hideVictoryScreen() {
     document.getElementById('victory-screen-overlay').style.display = 'none';
 }
