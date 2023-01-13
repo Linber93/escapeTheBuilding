@@ -2,32 +2,33 @@
 
 [View deployed site here](https://linber93.github.io/escapeTheBuilding/)
 
-This is website includes a game for anyone looking for way to kill a few minutes of time
+This is website includes a game for anyone looking for way to kill a few minutes of time.
 
-![Website shown on different devices](../assets/readme/escape-the-building-responsiveness.png)
+## Objective
+
+the games objective is for the player (indicated by red circle) to move to the exit(indicated by a yellow square) navigation through the maze.
+
+![Website shown on different devices](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-responsiveness.png)
 
 
 ### Features
 
-- __Introduction__
- - providing a portrait of me.
- - giving to basic contact information including phone number, address and email.
+- __header__
+ - shows a simple title to the game including logo
 
-![Introduction](https://github.com/Linber93/CIPP1/blob/main/assets/readme/introduction.png)
+![header](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-header.png)
+
+- __Gameboard__
+ - corridor is indicated by the color white
+ - walls is indicated by the color black
+
+![gameboard](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-gameboard.png)
 
 - __Navigation__
- - an easy-to-use menu
- - clear indication of where you are located on the site
+ - a navigation pad to use on touch devices or with mouse
+ - navigation can also be done using your keyboard
 
-![Navigation bar](https://github.com/Linber93/CIPP1/blob/main/assets/readme/nav-bar.png)
-
-- __Landing page__
- - a short description of who I am and what I do.
- - has a short self-estimation of my soft skills
- - includes a picture to make the page more interesting, paired with a quote which describes my way to success
-
-![landing page top](https://github.com/Linber93/CIPP1/blob/main/assets/readme/landing-top.png)
-![landing page bottom](https://github.com/Linber93/CIPP1/blob/main/assets/readme/landing-bottom.png)
+![landing page top](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-navigation.png)
 
 - __Footer__
  - includes links to LinkedIn and GitHub that will open in a new tab

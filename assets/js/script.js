@@ -69,7 +69,7 @@ function loadGame() {
         }
     }
 
-    
+
 
     let mazeExit = document.getElementById(`c${game.exitY}-${game.exitX}`);
     mazeExit.classList.add('exit-location');
@@ -142,10 +142,10 @@ function playerMove(x, y) {
     }
 }
 // Remove the current position class from whichever cell(s) has/have it.
-    // Assuming the possibility that multiple cells might be marked as current
-    // to be safe.
+// Assuming the possibility that multiple cells might be marked as current
+// to be safe.
 function updatePlayerPositionDisplay() {
-    
+
     document.querySelectorAll('.current-position').forEach((div, i) => {
         div.classList.remove('current-position');
     });
