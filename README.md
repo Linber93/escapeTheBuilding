@@ -28,71 +28,57 @@ the games objective is for the player (indicated by red circle) to move to the e
  - a navigation pad to use on touch devices or with mouse
  - navigation can also be done using your keyboard
 
-![landing page top](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-navigation.png)
+![navigation pad](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-navigation.png)
 
-- __Footer__
- - includes links to LinkedIn and GitHub that will open in a new tab
- - link that allows the user to download a traditional version of the resume
+- __Start Button__
+ - starts a countdown on click which will start the game when it reaches 0.
+ - resets the game and starts a new when pressed again
 
-![Footer](https://github.com/Linber93/CIPP1/blob/main/assets/readme/footer.png)
+![start button](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-start-button.png)
 
-- __Work History Page__
- - includes a list of past employments with descriptions that drops down on request
- - shows received awards and education
+- __victory overlay__
+ - once the user has reached the goal an ovelay will show displaying the time that has elapsed since the game started until the goal was reached.
+ - has and exit button that allows the user to close and restart the game. 
 
-![Awards and education](https://github.com/Linber93/CIPP1/blob/main/assets/readme/awards-education.png)
-![Work history](https://github.com/Linber93/CIPP1/blob/main/assets/readme/work-history.png)
-
-- __Contact page__
- - this page will allow the user to send me a message. The user will be asked to submit their name and email address along with their message before being able to send their message.
-
-![Contact form](https://github.com/Linber93/CIPP1/blob/main/assets/readme/contact.png)
+![victory overlay](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-victory.png)
 
 ## UX
 
 ### The ideal user is:
 * English speaking
-* A recruiter working for a company
+* looking for a way get his/her brain going
 
 ### What the user should be looking for:
-* To learn more about Linus
+* A few minutes of 
 * A way to contact Linus 
-
-### Wireframes
-
-- [Landing page](https://github.com/Linber93/CIPP1/blob/main/assets/readme/landing-wireframe.png)
-- [Work History](https://github.com/Linber93/CIPP1/blob/main/assets/readme/work-history-wireframe.png)
-- [Contact](https://github.com/Linber93/CIPP1/blob/main/assets/readme/contact-wireframe.png)
-
-
 
 ## Testing
 
 ### Features tested
-| Test subject | Description | Result |
-| ----------- | ----------- | ----------|
-| Links navbar| Check that all links in the navigation bar were working and leading to the correct location| PASSED |
-| Links social | Check that links are leading to the correct location and opens in a new tab | PASSED |
-| Devices | Check that the pages were displaying correctly on different device sizes | PASSED |
-| Downloadable content | Check that downloadable files download properly | PASSED |
-| Show job description button | Check that the description expands and display the correct description | PASSED |
-| Form | Check that all required fields are populated | PASSED |
-| Form | Check that a valid email is provided | PASSED |
-| Submit button | Check that you will be prompted to submit the required information before sending your message | PASSED |
-| Reset button | Check that all fields will empty properly when pressing the button | PASSED |
+| Test subject | test action | Expected Result | Result |
+| ----------- | ----------- | ----------| ----------|
+| Gameboard| Load the site up and await the DOM to load | Board loads up a complete maze with a path to the exit | PASSED |
+| Navigation pad | Try pressing the navigation buttons |  Only accept inputs if the game is started | PASSED |
+| Keyboard inputs | Use the arrowkeys on the keyboard. |  Only accept inputs if the game is started | PASSED |
+| Movement | Start the game a use a movement button |  Only register a movement command to move one tile in correct direction | PASSED |
+| Wall collision | Try to move through a wall or outside the Gameboard |  Return "invalid position" or an unchanged "new pos" in console and do nothing| PASSED |
+| Completed objective | Navigate through the maze and reach the goal(indicated by yellow square) | A victory overlay that returns a message including the time elapsed in seconds with two decimals | PASSED |
+| Victory overlay exit button | Press the exit button indicated with a X | Closes victory overlay and allows to start the game again | PASSED |
+| Start button | Press start button | Starts a count down from 5 and display "Game Started!" when it reaches 0 | PASSED |
 ### Validator testing
 
-- HTML - Validated using the official W3C Markup Validator. [W3C validator results](https://validator.w3.org/nu/?doc=https%3A%2F%2Flinber93.github.io%2FCIPP1%2F)
+- HTML - Validated using the official W3C Markup Validator. [W3C validator results](https://validator.w3.org/nu/?doc=https%3A%2F%2Flinber93.github.io%2FescapeTheBuilding%2F)
 
-- CSS - validated using the official W3C Jigsaw CSS validation Service. [W3C CSS validator results](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Flinber93.github.io%2FCIPP1%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
+- CSS - validated using the official W3C Jigsaw CSS validation Service. [W3C CSS validator results](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Flinber93.github.io%2FescapeTheBuilding%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
+
+- JavaScript - Validated using jshint [jshint.com](https://jshint.com/)
 
 ### Lighthouse
 
 The site has been tested using Lighthouse in Chrome developer tool
 
-![Landing page test](https://github.com/Linber93/CIPP1/blob/main/assets/readme/landing-lighthouse.png)
-![Work history page test](https://github.com/Linber93/CIPP1/blob/main/assets/readme/work-history-lighthouse.png)
-![Contact page test](https://github.com/Linber93/CIPP1/blob/main/assets/readme/contact-lighthouse.png)
+![Lighthouse test](https://github.com/Linber93/escapeTheBuilding/blob/main/assets/readme/escape-the-building-ligthhouse.png)
+
 
 ### Browser compatibility
 - Tested on Microsoft Edge Version 108.0.1462.54 on Windows 10 Home 21H2.
@@ -109,7 +95,7 @@ The site has been tested using Lighthouse in Chrome developer tool
   4. Once the main branch has been selected, you might be required to wait for a few minutes after refreshing the browser there should be a ribbon on the page with a generated link with the published site 
 
 
- [View deployed site here](https://linber93.github.io/CIPP1/)
+ [View deployed site here](https://linber93.github.io/escapeTheBuilding/)
 
 ## Forking
 Forking the GitHub Repository
@@ -132,23 +118,21 @@ forking the GitHub Repository allows you to make a copy of the original reposito
 
 
 ## External technologies used
- - [W3C schools](https://www.w3schools.com/) - Used for information on how to create links to downloadable content. 
+ - [MDN](https://developer.mozilla.org/en-US/) - external resource to learn more about javascript
  - [FontAwesome](https://fontawesome.com/) - Utilized for icons for the contact information and for social media links
- - [Flexbox Froggy](https://flexboxfroggy.com/) - For learning how to use flex box.
  - [Gitpod](https://www.gitpod.io/) - The developer used Gitpod to develop this site.
  - [Github](https://github.com/) - used to store and save my project during the development process.
  - [Github Pages](https://pages.github.com/) - Used to host and publish the project.
  - HTML5 - Mark-up language using semantic structure
  - CCS3 - Cascading style sheets used to style.
+ - javascript - 
 
 
 ## Credits
 ### Content
  - Content was created and assessed by Linus Berger.
-### Media
- - The hero image was acquired from [Pexels.com](https://www.pexels.com/).
- - Background image in the contact page was taken from Linus Berger's personal collection.
+
 ### Acknowledgements
  - I received some ideas on design and how to clean up my code from friends and relatives
- - My fellow classmate Lizah Gyllingsten for bouncing ideas with and also troubleshooting problematic code
- - My Mentor Brian Macharia for guiding me through this project and giving valuable tips and advice throughout the development process
+ - My uncle Stefan Löfgren for assistance with bugfixes, smart sollutions to problems that arrised during development.
+ - My Mentor Brian Macharia for guiding me through this project and giving valuable tips and advice throughout the development process.
